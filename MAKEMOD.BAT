@@ -1,0 +1,1 @@
+make -DPRETTY -fMAKEFILE.MAK %1
