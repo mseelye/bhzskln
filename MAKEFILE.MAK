@@ -154,14 +154,21 @@ $(MODULE).VIR : $(MODULE).BCR
   @copy $(MODULE).VIR $(BBS)\$(MODULE).VIR > nul
 
 # Clean, show status
-clean : purge
+clean : purgeall
   cls
   $(STATUS)
+
+# Just cleans local dir
+tidy : purgemodsrc
+  cls
+  dir /w
 
 # Purge files from deploy directory
 # Note: There are more elegant ways to do 'clean' with make
 # but this is more clear and explicit.
-purge :
+purgeall : purgebbs purgemodsrc
+
+purgebbs:
   @echo $(ESC1)$(ESCY)DEL: $(ESCZ)Clean $(MODULE) files in $(BBS) and $(BBS)\phobj...
   @del $(BBS)\$(MODULE).VIR > nul
   @del $(BBS)\$(MODULE).DLL > nul
@@ -170,6 +177,8 @@ purge :
   @del $(BBS)\$(MODULE).MDF > nul
   @del $(BBS)\$(MODULE).MSG > nul
   @del $(BBS)\PHOBJ\$(MODULE).OBJ > nul
+
+purgemodsrc:
   @del PHONY.* > nul
   @del $(MODULE).MAP > nul
   @del $(MODULE).MCV > nul
