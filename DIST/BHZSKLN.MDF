@@ -1,0 +1,27 @@
+; BHZ Skeleton Module Example MDF
+
+Module Name: BHZ Skeleton Module
+
+Developer: Mark Seelye (bhz) 2023-10-13
+
+Requires:
+Replaces:
+
+Install:
+
+Online user manual: 
+
+DLLs: BHZSKLN
+MSGs: BHZSKLN
+
+Btrieve page size:    128
+Btrieve files:        1
+
+Cleanup:
+
+Event-1:
+Event-2:
+Event-3:
+Event-4:
+
+Add-On Utility:

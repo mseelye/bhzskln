@@ -1,0 +1,92 @@
+LANGUAGE {English/ANSI}
+
+LEVEL0 {}
+
+FILE01 {THISFILE.MSG} Module Message File
+
+Configuration variables
+LEVEL4 {}
+
+STARTING {starting...} T Starting message
+
+012345678901234567890123456789012345678901234567890123456789
+1 This is where you can put help text to be seen while     |
+2 the sysop is using the configuration screens in the      |
+3 console.                                                 |
+4 It can be up to 60 characters wide and 12 lines tall.    |
+5 See operations manual for details                        |
+6                                                          |
+7                                                          |
+8                                                          |
+9                                                          |
+0                                                          |
+1-----------------------------------------------------------
+MENU {[1;32mPlease select one of the following: 
+
+   [1;36m1 [1;33m... Print some text
+   [1;36m2 [1;33m... Insert a record (use: "2 [data1] [data2]")
+   [1;36m3 [1;33m... Dump records to screen
+} T Skeleton Menu
+
+SHMENU {
+[1;36mMake your selection (1, 2, 3, or X to exit): } T Skeleton Menu - Make selection
+
+0123456789012345678901234567890123456
+1 Each entry can have one of these. |
+2 They don't need to use all 60x12. |
+3------------------------------------
+OPT1 {
+This is option One!
+} T Option 1
+
+They also do not need to be in a box.
+They just should fit within that 60x12 space.
+
+OPT2 {
+Inserting some data into the database...
+} T Option 2 - insert data
+
+OPT3 {
+Dumping all records from database...
+} T Option 3 - dump records
+
+OUTPUT {You entered: } T Output
+DBEMPTY {
+Database is empty, use option 2 to insert some data.
+} T Database is empty message
+
+DEFDATA1 {.data1.} S 7 Default Data1 for new records.
+
+DEFDATA2 {.-------- data2 --------.} S 25 Default Data2 for new records.
+
+INSREC {
+Inserting record: 
+   date:  %s  (%u)
+   time:  %s  (%u)
+   user:  %s
+   data1: %s
+   data2: %s
+} T Insert record message
+
+Output Record Format parameters:
+0: index
+1: date as int
+2: date as string
+3: time as int
+4: time as tring
+5: user id
+6: data1
+7: data2
+OUTREC {#%02d:%u=%s|%u=%s|%s|%s|%s
+} T Output record format
+
+INSFAIL {
+The insert has failed!
+Probably because this uses the date and time as a unique key.
+Wait 2 seconds between inserts.
+} T Insert has failed message
+
+Screen variables
+LEVEL6 {}
+
+LEVEL99 {}
