@@ -41,17 +41,21 @@
 # MODID=SKLN
 !include "MAKEFILE.INC"
 MODULE=$(DEVID)$(MODID)
-BBS=\BBSV6
-PHARLIB=\RUN286\BC3\LIB\PHAPI.LIB
+BBSDR=C:
+BBS=$(BBSDR)\BBSV6
+PHARINC=$(BBSDR)\RUN286\INC
+PHARLIB=$(BBSDR)\RUN286\BC3\LIB
 BBSSRC=$(BBS)\SRC
+MODSRCDR=$(BBSDR)
 MODSRC=$(BBSSRC)\$(DEVID)\$(MODID)
-MODMAIN=MODMAIN
+# MODSRCDR=E:
+# MODSRC=$(MODSRCDR)
 
 STATUS=dir /w $(BBS)\$(DEVID)$(MODID)*.*
 # If you're using DOSBox use/modify the folowing for CTDLL and LTDLL
 # DOSBox BAT files don't seem to return error status well to MAKE
-CTDLL=bcc -o$(BBS)\phobj\$(MODULE).OBJ @$(BBSSRC)\makdll.cfg
-LTDLL=tlink @$(MODULE).LNK | REM
+#CTDLL=bcc -o$(BBS)\phobj\$(MODULE).OBJ @$(BBSSRC)\makdll.cfg
+#LTDLL=tlink @$(MODULE).LNK | REM
 
 # Comment this line out if you are not using DOSBox, or you do not want to
 # auto warp on make all
@@ -77,10 +81,8 @@ ESCZ = [0m
 .autodepend
 .silent
 .noignore
-.path.c=$(MODSRC)
-.path.h=$(MODSRC)
 .path.dll=$(BBS)
-.path.obj=$(BBS)\phobj
+.path.obj=$(BBS)\PHOBJ
 
 # all: Clean, Build Messages, Build Module, Create Empty Database, show status of install
 # all : start warp messages database module unwarp done
@@ -112,14 +114,14 @@ status :
 
 # Builds DLL
 # Note: You add libs here as needed
-$(MODULE).DLL : $(MODULE).OBJ $(BBS)\dlib\galimp.lib $(PHARLIB)
+$(MODULE).DLL : $(MODULE).OBJ $(BBS)\dlib\galimp.lib $(PHARLIB)\PHAPI.LIB
   @echo $(ESC1)$(ESCY)LTDLL: $(ESCZ)Building $(MODULE).DLL...
-  @cd $(MODSRC) > nul
-  $(LTDLL) $(MODULE)
+  # ltdll $(MODULE)
+  TLINK /L$(PHARLIB);$(BBS)\DLIB @$(MODULE).LNK
 
+# Deploy MDF as needed (uses phony kludge)
 PHONY.MDF : $(MODULE).MDF
   @echo $(ESC1)$(ESCY)COPY: $(ESCZ)Deploying $(MODULE).MDF file to $(BBS)...
-  @cd $(MODSRC) > nul
   @copy $(MODULE).MDF PHONY.MDF > nul
   copy $(MODULE).MDF $(BBS)\$(MODULE).MDF
   @touch PHONY.MDF > nul
@@ -127,37 +129,33 @@ PHONY.MDF : $(MODULE).MDF
 # Build object files for module
 $(MODULE).OBJ : $(MODMAIN).C $(MODMAIN).H $(MODULE).H MODDEFS.H
   @echo $(ESC1)$(ESCY)CTDLL: $(ESCZ)Building $(MODULE).OBJ...
-  @cd $(MODSRC) > nul
-  $(CTDLL) $(MODMAIN)
+  # ctdll $(MODMAIN)
+  bcc -o$(BBS)\phobj\$(MODULE).OBJ -I$(BBSSRC) -I$(PHARINC) @$(BBSSRC)\makdll.cfg $(MODMAIN)
 
-# Build message file, create .H and .MCV files and deploy them to modsrc/bbs
+# Build message file, create .H and .MCV files and deploy them
 $(MODULE).H : PHONY.MSG
   @echo $(ESC1)$(ESCY)BBSMSX: $(ESCZ)Deploying and Building $(MODULE).MSG message file...
-  @cd $(BBS) > nul
-  bbsmsx $(MODULE)
-  @cd $(MODSRC) > nul
-  @copy $(BBS)\$(MODULE).h . > nul
+  $(BBS)\bbsmsx $(MODULE)
+  @copy $(MODULE).MCV $(BBS)\$(MODULE).MCV > nul
 
-# Deploy the MSG file
+# Deploy the MSG file (uses phony kludge)
 PHONY.MSG : $(MODULE).MSG
   @echo $(ESC1)$(ESCY)COPY: $(ESCZ)Deploying $(MODULE).msg message file to $(BBS)\...
-  @cd $(MODSRC) > nul
   @copy $(MODULE).MSG PHONY.MSG > nul
   copy $(MODULE).MSG $(BBS)\$(MODULE).MSG
-  @touch PHONY.MSG
+  @touch PHONY.MSG > nul
 
 # Build empty btrieve database for module using BCR file, deploy
 $(MODULE).VIR : $(MODULE).BCR
   echo $(ESC1)$(ESCY)BTRIEVE: $(ESCZ)Starting Btrieve (if not started)...
   @-$(BBS)\btrieve.exe > nul
   echo $(ESC1)$(ESCY)BUTIL: $(ESCZ)Creating blank $(MODULE).VIR database file...
-  cd $(MODSRC)
   butil -create $(MODULE).VIR $(MODULE).BCR
-  @copy $(MODULE).VIR $(BBS)\. > nul
+  @copy $(MODULE).VIR $(BBS)\$(MODULE).VIR > nul
 
 # Clean, show status
 clean : purge
-  @echo $(ESCS)
+  cls
   $(STATUS)
 
 # Purge files from deploy directory
@@ -165,40 +163,52 @@ clean : purge
 # but this is more clear and explicit.
 purge :
   @echo $(ESC1)$(ESCY)DEL: $(ESCZ)Clean $(MODULE) files in $(BBS) and $(BBS)\phobj...
-  @cd $(BBS) > nul
-  @del $(MODULE).VIR > nul
-  @del $(MODULE).DLL > nul
-  @del $(MODULE).H > nul
-  @del $(MODULE).MCV > nul
-  @del $(MODULE).MDF > nul
-  @del $(MODULE).MSG > nul
-  @del PHOBJ\$(MODULE).OBJ > nul
-  @cd $(MODSRC) > nul
+  @del $(BBS)\$(MODULE).VIR > nul
+  @del $(BBS)\$(MODULE).DLL > nul
+  @del $(BBS)\$(MODULE).H > nul
+  @del $(BBS)\$(MODULE).MCV > nul
+  @del $(BBS)\$(MODULE).MDF > nul
+  @del $(BBS)\$(MODULE).MSG > nul
+  @del $(BBS)\PHOBJ\$(MODULE).OBJ > nul
   @del PHONY.* > nul
+  @del $(MODULE).MAP > nul
+  @del $(MODULE).MCV > nul
   @del $(MODULE).VIR > nul
   @del $(MODULE).H > nul
-
 
 #
 # Convenience Stuff
 #
-
 #     _   ,_,   _   
 #    / `'=) (='` \  
 #   /.-.-.\ /.-.-.\ 
 #   `      "      ` 
+# Note: Only works if you set $(MODSRC)/$(MODSRCDR) correctly
 bats:
+  @cls
   @echo Building convenience batch files...
-  @cd $(BBS) > nul
-  @del $(MODULE).bat > nul
-  @echo :: Convenience batch file to return to module src dir. > $(MODULE).bat
-  @echo cd $(MODSRC) >> $(MODULE).bat
-  @echo cls >> $(MODULE).bat
-  @cd $(MODSRC) > nul
+  @echo $(ESCY)Note: Only works if you set MODSRC/MODSRCDR correctly!$(ESCZ)
+  @echo Currently set to $(MODSRC)\ and $(MODSRCDR)
+  @del $(BBS)\$(MODULE).bat > nul
+  @echo :: Convenience batch file to return to module src dir. > $(BBS)\$(MODULE).bat
+  @echo cd $(MODSRC)\ >> $(BBS)\$(MODULE).bat
+  @echo $(MODSRCDR) >> $(BBS)\$(MODULE).bat
+  @echo cls >> $(BBS)\$(MODULE).bat
   @del bbs.bat > nul
   @echo :: Convenience batch file to open BBS > bbs.bat
-  @echo cd $(BBS) >> bbs.bat
+  @echo cd $(BBS)\ >> bbs.bat
+  @echo $(BBSDR) >> bbs.bat
   @echo bbs.bat >> bbs.bat
+  @echo.
+  @echo --- $(MODSRC)\bbs.bat: ---
+  @type $(MODSRC)\bbs.bat
+  @echo.
+  @echo --- $(BBS)\$(MODULE).bat: ---
+  @type $(BBS)\$(MODULE).bat
+  @echo.
+  @echo $(ESCY)If ^^ those ^^ directories and drive letters are not correct
+  @echo $(ESCY)then these batch files won't work.$(ESCZ)
+
 
 warp:
   echo.

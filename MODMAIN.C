@@ -231,7 +231,7 @@ static void out_records() {
     rstmbk:           Page 66     - Restore to previous MCV from before last setmbk call
     setbtv:           Page 150    - Set BTVFILE ptr for subsequent ops
     rstbtv:           Page 150    - Restore to previous BTVFILE from before last setbtv call
-    prfmsg:           Pages 65,69 - Works like printf/prf, control string from current MCV file
+    prfmsg/prf:       Pages 65,69 - Works like printf/prf, control string from current MCV file
     outprf:           Pages 65,69 - Send prfbuf to a channel & clear user number
     sameas:           Page 174    - Case-ignoring string match
     rstrin:           Page 74     - Restore parsed input line (undo effects of parsin)
@@ -249,6 +249,7 @@ static int bhz_sttrou(void) {
   } else {
     if (margc > 0) {
       if (sameas(margv[0], "1")) {
+        prf("%s %s\n", MODNAM, MODVER);
         prfmsg(OPT1);
       } else if (sameas(margv[0], "2")) {
         prfmsg(OPT2);

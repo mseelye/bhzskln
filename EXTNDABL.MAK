@@ -10,61 +10,46 @@
 # MODID=SKLN
 !include "MAKEFILE.INC"
 MODULE=$(DEVID)$(MODID)
-BBS=\BBSV6
-PHARLIB=\RUN286\BC3\LIB\PHAPI.LIB
+BBS=C:\BBSV6
+PHARINC=C:\RUN286\INC
+PHARLIB=C:\RUN286\BC3\LIB
 BBSSRC=$(BBS)\SRC
 MODSRC=$(BBSSRC)\$(DEVID)\$(MODID)
-MODMAIN=MODMAIN
-
-# If you're using DOSBox use/modify the folowing for CTDLL and LTDLL
-# DOSBox BAT files don't seem to return error status well to MAKE
-CTDLL=bcc -o$(BBS)\phobj\$(MODULE).OBJ @$(BBSSRC)\makdll.cfg
-LTDLL=tlink @$(MODULE).LNK | REM
-# use the actual CTDLL, LTDLL if not DOSBox, or if you don't care about errors
-# CTDLL=ctdll
-# LTDLL=ltdll
 
 .autodepend
 .nosilent
 .noignore
-.path.c=$(MODSRC)
-.path.h=$(MODSRC)
 .path.dll=$(BBS)
-.path.obj=$(BBS)\phobj
+.path.obj=$(BBS)\PHOBJ
 
 all : PHONY.MDF $(MODULE).VIR $(MODULE).DLL
 
-$(MODULE).DLL : $(MODULE).obj $(BBS)\dlib\galimp.lib $(PHARLIB)
-  @cd $(MODSRC) > nul
-  $(LTDLL) $(MODULE)
+$(MODULE).DLL : $(MODULE).obj $(BBS)\DLIB\GALIMP.LIB $(PHARLIB)\PHAPI.LIB
+  # ltdll $(MODULE)
+  TLINK /L$(PHARLIB);$(BBS)\DLIB @$(MODULE).LNK
 
 PHONY.MDF : $(MODULE).MDF
-  @cd $(MODSRC) > nul
   @copy $(MODULE).MDF PHONY.MDF > nul
   copy $(MODULE).MDF $(BBS)\$(MODULE).MDF
   @touch PHONY.MDF > nul
 
 $(MODULE).OBJ : $(MODMAIN).C $(MODMAIN).H $(MODULE).H MODDEFS.H
-  @cd $(MODSRC) > nul
-  $(CTDLL) $(MODMAIN)
+  # ctdll $(MODMAIN)
+  bcc -o$(BBS)\phobj\$(MODULE).OBJ -I$(BBSSRC) -I$(PHARINC) @$(BBSSRC)\makdll.cfg $(MODMAIN)
 
 $(MODULE).H : PHONY.MSG
-  @cd $(BBS) > nul
-  bbsmsx $(MODULE)
-  @cd $(MODSRC) > nul
-  @copy $(BBS)\$(MODULE).h . > nul
+  $(BBS)\bbsmsx $(MODULE)
+  @copy $(MODULE).MCV $(BBS)\$(MODULE).MCV > nul
 
 PHONY.MSG: $(MODULE).MSG
-  @cd $(MODSRC) > nul
   @copy $(MODULE).MSG PHONY.MSG > nul
   copy $(MODULE).MSG $(BBS)\$(MODULE).MSG
-  @touch PHONY.MSG
+  @touch PHONY.MSG > nul
 
 $(MODULE).VIR : $(MODULE).BCR
   @-$(BBS)\btrieve.exe > nul
-  cd $(MODSRC)
   butil -create $(MODULE).VIR $(MODULE).BCR
-  @copy $(MODULE).VIR $(BBS)\. > nul
+  @copy $(MODULE).VIR $(BBS)\$(MODULE).VIR > nul
 
 # Clean, show status
 clean : purge
@@ -74,15 +59,15 @@ clean : purge
 # Note: There are more elegant ways to do 'clean' with make
 # but this is more clear and explicit.
 purge :
-  @cd $(BBS) > nul
-  @del $(MODULE).VIR > nul
-  @del $(MODULE).DLL > nul
-  @del $(MODULE).H > nul
-  @del $(MODULE).MCV > nul
-  @del $(MODULE).MDF > nul
-  @del $(MODULE).MSG > nul
-  @del PHOBJ\$(MODULE).OBJ > nul
-  @cd $(MODSRC) > nul
+  @del $(BBS)\$(MODULE).VIR > nul
+  @del $(BBS)\$(MODULE).DLL > nul
+  @del $(BBS)\$(MODULE).H > nul
+  @del $(BBS)\$(MODULE).MCV > nul
+  @del $(BBS)\$(MODULE).MDF > nul
+  @del $(BBS)\$(MODULE).MSG > nul
+  @del $(BBS)\PHOBJ\$(MODULE).OBJ > nul
   @del PHONY.* > nul
+  @del $(MODULE).MAP > nul
+  @del $(MODULE).MCV > nul
   @del $(MODULE).VIR > nul
   @del $(MODULE).H > nul

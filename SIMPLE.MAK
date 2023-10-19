@@ -10,45 +10,37 @@
 .autodepend
 .nosilent
 .noignore
-.path.c=c:\bbsv6\src\bhz\skln
-.path.h=c:\bbsv6\src\bhz\skln
+#.path.c=c:\bbsv6\src\bhz\skln
+#.path.h=c:\bbsv6\src\bhz\skln
 .path.dll=c:\bbsv6
 .path.obj=c:\bbsv6\phobj
 
 all: phony.mdf bhzskln.vir bhzskln.dll
 
 bhzskln.dll : bhzskln.obj c:\bbsv6\dlib\galimp.lib c:\run286\bc3\lib\phapi.lib
-  @cd c:\bbsv6\src\bhz\skln > nul
-  ltdll bhzskln
+  # ltdll bhzskln
+  tlink /Lc:\run286\bc3\lib;c:\bbsv6\dlib @bhzskln.lnk
 
 phony.mdf : bhzskln.mdf
-  @cd c:\bbsv6\src\bhz\skln > nul
   @copy bhzskln.mdf phony.mdf > nul
   @copy phony.mdf c:\bbsv6\bhzskln.mdf > nul
   @touch phony.mdf > nul
 
 bhzskln.obj : modmain.c modmain.h bhzskln.h moddefs.h
-  @cd c:\bbsv6\src\bhz\skln > nul
   # ctdll modmain
-  bcc -oc:\bbsv6\phobj\bhzskln.obj @\bbsv6\src\makdll.cfg modmain
+  bcc -oc:\bbsv6\phobj\bhzskln.obj -Ic:\bbsv6\src -Ic:\run286\inc @c:\bbsv6\src\makdll.cfg modmain
 
 bhzskln.h : phony.msg
-  @cd c:\bbsv6 > nul
-  bbsmsx bhzskln
-  @cd c:\bbsv6\src\bhz\skln > nul
-  @copy c:\bbsv6\bhzskln.h . > nul
+  c:\bbsv6\bbsmsx bhzskln
+  @copy bhzskln.mcv c:\bbsv6\bhzskln.mcv > nul
 
 phony.msg : bhzskln.msg
-  @cd c:\bbsv6\src\bhz\skln > nul
   @copy bhzskln.msg phony.msg > nul
   @copy phony.msg c:\bbsv6\bhzskln.msg > nul
   @touch phony.msg > nul
 
 bhzskln.vir : bhzskln.bcr
-  # must first run c:\bbsv6\btrieve.exe
-  #  or uncomment this:
-  #@-c:\bbsv6\btrieve.exe > nul
-  @cd c:\bbsv6\src\bhz\skln > nul
+  @-c:\bbsv6\btrieve.exe > nul
   butil -create bhzskln.vir bhzskln.bcr
   @copy bhzskln.vir c:\bbsv6\. > nul
 
@@ -56,15 +48,15 @@ bhzskln.vir : bhzskln.bcr
 # Note: There are more elegant ways to do 'clean' with make
 # but this is more clear and explicit.
 clean : 
-  @cd c:\bbsv6 > nul
-  @del bhzskln.vir > nul
-  @del bhzskln.dll > nul
-  @del bhzskln.h > nul
-  @del bhzskln.mcv > nul
-  @del bhzskln.mdf > nul
-  @del bhzskln.msg > nul
-  @del PHOBJ\bhzskln.obj > nul
-  @cd c:\bbsv6\src\bhz\skln > nul
+  @del c:\bbsv6\bhzskln.vir > nul
+  @del c:\bbsv6\bhzskln.dll > nul
+  @del c:\bbsv6\bhzskln.h > nul
+  @del c:\bbsv6\bhzskln.mcv > nul
+  @del c:\bbsv6\bhzskln.mdf > nul
+  @del c:\bbsv6\bhzskln.msg > nul
+  @del c:\bbsv6\phobj\bhzskln.obj > nul
   @del phony.* > nul
+  @del bhzskln.map > nul
+  @del bhzskln.mcv > nul
   @del bhzskln.vir > nul
   @del bhzskln.h > nul
