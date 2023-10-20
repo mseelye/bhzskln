@@ -1,6 +1,6 @@
 # BHZ Skeleton MBBS v6.x simple module makefile example
 #   Mark Seelye (bhz) 2023 - burninghorizon.com, bhz.co
-#   Very simple/explicit makefile example without weird ansi and targets
+#   Very simple/explicit makefile example without weird ansi, includes and targets
 #   Isn't included in NEWMOD.BAT because lazy.
 #   Notes:
 #     VIR target need to firest run c:\bbsv6\btrieve.exe
@@ -10,8 +10,6 @@
 .autodepend
 .nosilent
 .noignore
-#.path.c=c:\bbsv6\src\bhz\skln
-#.path.h=c:\bbsv6\src\bhz\skln
 .path.dll=c:\bbsv6
 .path.obj=c:\bbsv6\phobj
 

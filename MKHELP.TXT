@@ -1,0 +1,20 @@
+BHZ Skeleton MBBS v6.x module makefile help
+  Mark Seelye (bhz) 2023, burninghorizon.com, bhz.co
+
+Targets:
+  all      - Everything. (except tidy and clean)
+  dist     - Everything + Copy distributables to ./DIST
+  mdf      - Deploy the MDF file. (Created with NEWMOD.BAT)
+  database - Build the VIR file, deploy to BBS dir
+  module   - Build the DLL and some dependencies, deploy to BBS dir
+  status   - Show the current modules files in the BBS dir
+  help     - What you're reading now
+  warp     - Turn on DOSBox max cycles
+  unwarp   - Turn off DOSBox max cycles
+  clean    - Clean module's deployed files from BBS dir (except .DAT files!)
+  tidy     - Clean transient files from this module's project dir
+Switches: (passed with -D[SWITCH]  Ex: make -DPRETTY)
+  PRETTY   - Have output from makefile use ansi codes. (mut. excl. with QUIET)
+  QUIET    - Attempt to limit the output from the make as much as possible
+  NOWARP   - Disable DOSBOx warp stuff. (Can set in DSBXWARP.INC too)
+  CYCLES   - Number of DOSBox cpu cycles to "unwarp" to. (Default is 50000)
