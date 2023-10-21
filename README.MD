@@ -305,13 +305,13 @@ Start the BBS as usual using bbs.bat in the C:\bbsv6 directory.
     
 ---
 **To stop the BBS quickly while it is running**  
-From console to kill the BBS you can quickly hit: `F10` `F9` `F10` `F9`  
+ - From console to kill the BBS you can quickly hit: `F10` `F9` `F10` `F9`  
 (Then hold Alt-F12 to speed it up/warp in DOSBox) 
 
 ---
 #### DOSBox stuff  
 **To stop the BBS quickly while it is running**  
-When waiting for BBS, "Go!", shutting down, or while compiling  
+ - When waiting for BBS, "Go!", shutting down, or while compiling  
 You can press-and-hold `alt-F12` to "warp" DOSBox.
 
 ---
