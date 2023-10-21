@@ -1,7 +1,11 @@
 # BHZ Skeleton MBBS v6.x simple module makefile example
-#   Mark Seelye (bhz) 2023 - burninghorizon.com, bhz.co
+#   Mark Seelye (bhz) (c)2023 
+#   burninghorizon.com, bhz.co
+#   mseelye@yahoo.com
+#
 #   Very simple/explicit makefile example without weird ansi, includes and targets
 #   Isn't included in NEWMOD.BAT because lazy.
+#
 #   Notes:
 #     VIR target need to firest run c:\bbsv6\btrieve.exe
 #     MAKE v3.6 doesn't have .phony, so there is a phony kludge here

@@ -1,7 +1,7 @@
 # BHZ Skeleton MBBS v6.x module makefile
-#   Mark Seelye (bhz) 2023
-#   burninghorizon.com
-#   bhz.co
+#   Mark Seelye (bhz) (c)2023
+#   burninghorizon.com, bhz.co
+#   mseelye@yahoo.com
 #
 # Can be easily customized to be used for new projects:
 #   Use NEWMOD.BAT to create a new instance of a module from this.

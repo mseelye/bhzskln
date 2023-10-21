@@ -1,5 +1,6 @@
 BHZ Skeleton MBBS v6.x module makefile help
-  Mark Seelye (bhz) 2023, burninghorizon.com, bhz.co
+  Mark Seelye (bhz) (c)2023, burninghorizon.com, bhz.co
+  mseelye@yahoo.com
 
 Targets:
   all      - Everything. (except tidy and clean)

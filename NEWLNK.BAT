@@ -1,10 +1,11 @@
 @echo off
-:: DOSBox compatible new mdf util
+:: DOSBox compatible new LNK util
 ::  Used by NEWMOD.BAT
 ::
 ::  BHZ Skeleton Module for MBBS v6.x
-::  Mark Seelye (bhz) 2023
+::  Mark Seelye (bhz) (c)2023
 ::  burninghorizon.com, bhz.co
+::  mseelye@yahoo.com
 
 :: 4 required args
 IF "%4"=="" goto usage

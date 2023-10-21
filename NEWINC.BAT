@@ -3,8 +3,9 @@
 ::  Used by NEWMOD.BAT
 ::
 ::  BHZ Skeleton Module for MBBS v6.x
-::  Mark Seelye (bhz) 2023
+::  Mark Seelye (bhz) (c)2023
 ::  burninghorizon.com, bhz.co
+::  mseelye@yahoo.com
 
 :: 7 required args
 :: dev id, mod id, modmain, drive, bbs dir, src dir, and file

@@ -1,8 +1,9 @@
 @echo off
-:: DOSBox compatible newproject batch file
+:: DOSBox compatible new MBBS module project batch file
 ::  BHZ Skeleton Module for MBBS v6.x
-::  Mark Seelye (bhz) 2023
+::  Mark Seelye (bhz) (c)2023
 ::  burninghorizon.com, bhz.co
+::  mseelye@yahoo.com
 
 :: Defaults
 set _modmaindef=MODMAIN
