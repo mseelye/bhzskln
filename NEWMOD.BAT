@@ -75,30 +75,24 @@ COPY %_from%.%_ext% %_file% > nul
 set _c=%_c%,%_file%
 
 :file4
-set _file=%_dest%\MAKEMOD.BAT
-IF EXIST %_file% goto file5
-COPY MAKEMOD.BAT %_file% > nul
-set _c=%_c%,%_file%
-
-:file5
 set _file=%_dest%\%_modmain%.C
-IF EXIST %_file% goto file6
+IF EXIST %_file% goto file5
 COPY MODMAIN.C %_file% > nul
 set _c=%_c%,%_file%
 
-:file6
+:file5
 set _file=%_dest%\%_modmain%.H
-IF EXIST %_file% goto file7
+IF EXIST %_file% goto file6
 COPY MODMAIN.H %_file% > nul
 set _c=%_c%,%_file%
 
-:file7
+:file6
 set _file=%_dest%\MODDEFS.H
-IF EXIST %_file% goto file8
+IF EXIST %_file% goto file7
 set _c=%_c%,%_file% > %_file%
 CALL NEWDEFS.BAT %_name% %_modmain% %_file%
 
-:file8
+:file7
 set _ext=LNK
 set _file=%_dest%\%_name%.%_ext%
 IF EXIST %_file% goto makefile1
@@ -106,29 +100,19 @@ set _c=%_c%,%_file% > %_file%
 CALL NEWLNK.BAT %_name% %_dr%\run286\bc3\lib %_bbsdir% %_file%
 
 :makefile1
-set _src=MAKEFILE.MAK
-set _file=%_dest%\%_src%
-IF EXIST %_file% goto makefile2
-COPY %_src% %_file% > nul
-set _c=%_c%,%_file%
-
-:makefile2
 set _file=%_dest%\MAKEFILE.INC
-IF EXIST %_file% goto makefile3
+IF EXIST %_file% goto makefiles
 set _c=%_c%,%_file%
 CALL NEWINC.BAT %_devid% %_modid% %_modmain% %_dr% %_bbs% %_srcdir% %_file%
 
-:makefile3
-set _file=%_dest%\MAKEMOD.BAT
-IF EXIST %_file% goto nextsteps
-COPY MAKEMOD.BAT %_file% > nul
-set _c=%_c%,%_file%
+:makefiles
+COPY MAKEFILE.MAK MAKEMOD.BAT BATS.INC DSBXWARP.INC MAKEMSGS.INC %_dest%\. > nul
 
 :nextsteps
 IF %_c%=="" goto nothing
 
 :done
-echo Done! %_c%
+echo Done!
 goto outdir
 
 :nothing
