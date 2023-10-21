@@ -110,7 +110,7 @@ ABCSTUFF.VIR              2,048 21-10-2023  11:20
 
 Create a directory for these files somewhere along-side/near your MBBSEmu installation, and copy the files from this project's DIST directory into it.
 
-update your installation's `modules.json` to have the module, it might look something like:
+Update your installation's `modules.json` to have the module, it might look something like:
 ```json
 {
   "Modules": [
@@ -146,6 +146,10 @@ Please select one of the following:
 Main Menu
 Make your selection (X to exit):
 ```
+
+**Tips**  
+Another option is to just point MBBSEmu `modules.json` at the `./DIST` sub-directory instead of copying everything. However, there may be unwanted side-effects if you compile while MBBSEmu is running.
+
 
 ## Contributing
 
