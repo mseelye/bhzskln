@@ -46,6 +46,8 @@ Information:
 Installing MBBS 6.2
   Free Edition:
     https://www.themajorbbs.com/download/the-major-bbs-v6-25-free-edition/?tmstv=1697295157
+  Misc. Other MBBS Files (Dev Source, PHARLIB, Etc)
+    http://software.bbsdocumentary.com/IBM/DOS/MAJORBBS/
 
 Emulation:
   MBBSEmu https://www.mbbsemu.com/
