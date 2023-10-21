@@ -54,7 +54,7 @@ You can just make this up, but try choose a unique one and avoid ones you've see
 This your 1-5 character Module ID.  
 This will be combined with your "Developer ID" to make an 8 character module name, like `ABCSTUFF`
 ---
-### Example - Initialize a new module project directory
+### Initialize a new module project directory
 Note: Run [NEWMOD.BAT](newmod.bat) without arguments to see some usage info (or just look through it).  
 
 In this example, while in the DOSBox command prompt, we are running `NEWMOD.BAT` with the arguments `ABC` and `STUFF` which will create a new module project directory with the default path to the bbs, in `c:\bbsv6\src\abc\stuff`  
@@ -70,7 +70,7 @@ MODMAIN.C       MODMAIN.H
     2 Dir(s)        262,111,744 Bytes free.
 ```
 ---
-### Example - Build and Deploy
+### Build and Deploy
 Run `make help` to get some information on targets and switches/options, or just look at [mkhelp.txt](mkhelp.txt).
 
 In this example, while in the DOSBox command prompt, we are running `make all` to build and deploy the module dll and config files to `c:\bbsv6\`
@@ -92,7 +92,24 @@ Take a look in [MAKEFILE.MAK](makefile.mak) for more details about how it all wo
 The [MODMAIN.C](modmain.c) file also has information detailing pages in the MBBS Development guide for various GAL/MBBS functions used.
 
 ---
-### Example - Running the mod in MBBSEmu
+### Running the module in MBBS FREE  
+This assumes you have MBBS FREE installed, and running in DOSBox.  
+This also assumes you have the skeleton module (DIST) deployed to the `BBSV6` directory.
+ - Start the BBS Console (bbs.bat from c:\bbsv6\ directory.)
+ - MBBS Console: Option `2` "Design Menu Tree"
+    - While "TOP" is highlighted, `F2` (edit)
+    - Arrow down to open option (Fresh install will be #11)
+    - `Alt-E`, Choose open Letter, Enter Description, Key: [leave blank], Page: BHZSKLN, Save: Yes
+    - Arrow down to `"BHZSKLN"`  
+      Should be under the "TOP" menu, after "QWK, before "REMOTE"
+    - `F2` (edit), Select: Module Page, Yes, USER, `"BHZ Module Skeleton v0.1"`, Yes, hit `enter` twice
+    - `F10` (exit/save)
+  - MBBS Console: Select `5` "Go!"
+    - After BBS Loads hit `F7` to log in  
+    You should see an option in the top menu for the skeleton module matching what you enetered above.  
+
+---
+### Running the module in MBBSEmu
 In this example, while in the DOSBox command prompt, we are running `make dist` to build and deploy the module dll and config files to a `dist` sub-directory in the module project source directory.
 ```bash
 E:\> make dist
@@ -159,7 +176,6 @@ I'm not taking pull requests at this time. However, please feel free to open an 
 
 [MIT](https://choosealicense.com/licenses/mit/) [License](LICENSE)
 
-
 ## Assumptions:
 -  MBBS 6.x installed at C:\BBSV6  (You can use [themajorbbs.com's official free 6.2](https://www.themajorbbs.com/download/the-major-bbs-v6-25-free-edition/?tmstv=1697295157))
 -  MBBS 6.x dev files/tools installed in BBS's SRC sub-directory (can be [found online](http://software.bbsdocumentary.com/IBM/DOS/MAJORBBS/))
@@ -202,6 +218,8 @@ https://www.nomad.ee/btrieve/files/index.shtml
   VirtualBox (Free Edition)  
     https://www.themajorbbs.com/download/installing-the-major-bbs-v6-25-in-virtualbox/?tmstv=1697295157  
     https://www.themajorbbs.com/download/the-major-bbs-v6-25-free-edition-virtualbox-files/?tmstv=1697295157  
+
+---
 
 ## Files Map
 
@@ -253,3 +271,48 @@ There are 4 groups of files: `Makefile`, `Skeleton Source`, `Create Module`, and
 
 There is a set of demo videos of using this tooling, with some explanation text in the [demo directory](DEMO).
 
+---
+
+### More Tips, Tricks, Info
+
+#### Configure MBBS to be less annoying for development and testing  
+Start the BBS as usual using bbs.bat in the C:\bbsv6 directory.  
+
+---
+**To Speed up the BBS when using `F7` to log in from terminal**  
+ - Select option `1` "Hardware Setup":  
+    Scroll down to Option `7` of ~383, it is named `BAUD1`.  
+    Set the value of `BAUD1` to **57600**  (This is the actual channel group max)  
+    Hit `F10` to save and exit back to the main menu.
+
+---
+**To Speed up log in process, shorten the new user survey**  
+ - Select option `4` Configuration:  
+    Scroll down to option `9` of ~252, `LANGOP`, Hit `F3` to set value to `AUTO`  
+    Scroll down to option `10` of ~252, `ANSIOP`, Hit `F5` to set value to `ON`  
+    Scroll down to or search(`F8`) for option `ASKNAM` in the `BBSSUP.MSG options` section.  
+    Set **EACH** of the values for options `ASKNAM` threough `ASKSEX` (7 options) to `NO` (Use `F3` to select NO)  
+    Scroll down to, or search(`F8`) for option `DFTPR2` in the `GALMS.MSG options` section  
+    Hit `F3` to set `DFTPR2`'s value to `Notify`  
+    Hit `F10` to save and exit back to the main menu.
+
+---
+**To remove the prompt that pasues long text output**  
+*This one is especially annoying while playing things like InfinityComplex!*  
+  - With each account you log in as:  
+  Type `/GO ACCOUNT`, Hit `A` and then enter  
+  Cursor over to `"Pause output?"` and hit space until you select `"CONTINUOUS"`
+    
+---
+**To stop the BBS quickly while it is running**  
+From console to kill the BBS you can quickly hit: `F10` `F9` `F10` `F9`  
+(Then hold Alt-F12 to speed it up/warp in DOSBox) 
+
+---
+#### DOSBox stuff  
+**To stop the BBS quickly while it is running**  
+When waiting for BBS, "Go!", shutting down, or while compiling  
+You can press-and-hold `alt-F12` to "warp" DOSBox.
+
+---
+#### [Notes on setting up a DOSBox/MBBS Development Environment](EXTRAS/MBBS-DOSBox-Dev-Env-Setup.MD)
