@@ -310,7 +310,7 @@ Start the BBS as usual using bbs.bat in the C:\bbsv6 directory.
 
 ---
 #### DOSBox stuff  
-**To stop the BBS quickly while it is running**  
+**To speed up DOSBox when it is taking a while to do something**  
  - When waiting for BBS, "Go!", shutting down, or while compiling  
 You can press-and-hold `alt-F12` to "warp" DOSBox.
 
