@@ -13,6 +13,7 @@ Targets:
   unwarp   - Turn off DOSBox max cycles
   clean    - Clean module's deployed files from BBS dir (except .DAT files!)
   tidy     - Clean transient files from this module's project dir
+
 Switches: (passed with -D[SWITCH]  Ex: make -DPRETTY)
   PRETTY   - Have output from makefile use ansi codes. (mut. excl. with QUIET)
   QUIET    - Attempt to limit the output from the make as much as possible

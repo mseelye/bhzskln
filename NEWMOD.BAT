@@ -101,12 +101,13 @@ CALL NEWLNK.BAT %_name% %_dr%\run286\bc3\lib %_bbsdir% %_file%
 
 :makefile1
 set _file=%_dest%\MAKEFILE.INC
-IF EXIST %_file% goto makefiles
+IF EXIST %_file% goto otherfiles
 set _c=%_c%,%_file%
 CALL NEWINC.BAT %_devid% %_modid% %_modmain% %_dr% %_bbs% %_srcdir% %_file%
 
-:makefiles
+:otherfiles
 COPY MAKEFILE.MAK MAKEMOD.BAT BATS.INC DSBXWARP.INC MAKEMSGS.INC %_dest%\. > nul
+COPY MKHELP.TXT LICENSE %_dest%\. > nul
 
 :nextsteps
 IF %_c%=="" goto nothing
