@@ -164,7 +164,7 @@ I'm not taking pull requests at this time. However, please feel free to open an 
 -  MBBS 6.x installed at C:\BBSV6  (You can use [themajorbbs.com's official free 6.2](https://www.themajorbbs.com/download/the-major-bbs-v6-25-free-edition/?tmstv=1697295157))
 -  MBBS 6.x dev files/tools installed in BBS's SRC sub-directory (can be [found online](http://software.bbsdocumentary.com/IBM/DOS/MAJORBBS/))
 -  Btrieve.exe and butil.exe in path  (can be [found online](https://www.nomad.ee/btrieve/files/index.shtml))
--  BBSMSX.exe in classpath
+-  BBSMSX.exe somwhere in DOSBox's path (usually installed with mbbs dev)
 -  BorlandC 3.1 installed  ([check archive.org](https://archive.org/download/bcpp31) and [other](https://www.google.com/search?q=borland+c%2B%2B+3.1+compiler+free+download) [places](https://winworldpc.com/product/borland-c/30))
 -  Pharlap/phobj installed (can be [found online](https://archive.org/download/pharlap-286-v2.5))
 -  You are building all this within DOSBox, using BorlandC, and BorlandC's tooling!
